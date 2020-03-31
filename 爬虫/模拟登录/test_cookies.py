@@ -2,9 +2,9 @@ import requests
 
 # 使用cookie保持登录
 # cookies拼装成json
-Cookie = "_site_id_cookie=1; clientlanguage=zh_CN; uniqueVisitorId=93e5ebf5-b764-86f7-e506-08e706b90144; " \
-         "__qc_wId=465; pgv_pvid=9254292048; username=18182737073; JSESSIONID=5E13362ECD165AB70BD3CAD8628F3633; " \
-         "JSESSIONID=5E13362ECD165AB70BD3CAD8628F3633 "
+Cookie = "uniqueVisitorId=93e5ebf5-b764-86f7-e506-08e706b90144; pgv_pvid=9254292048; _site_id_cookie=1; " \
+         "JSESSIONID=B193C713D08823ABFA19B4AA146234D7; clientlanguage=zh_CN; __qc_wId=211; " \
+         "JSESSIONID=B193C713D08823ABFA19B4AA146234D7; username=18182737073 "
 Cookies = {}
 for i in Cookie.split(';'):
     key, value = i.split('=')

@@ -1,0 +1,6 @@
+#LWP-Cookies-2.0
+Set-Cookie3: JSESSIONID=EEA1A798C1399B0FF9F838614C6CA3F7; path="/"; domain=".tipdm.org"; path_spec; discard; version=0
+Set-Cookie3: username=18182737073; path="/"; domain=".tipdm.org"; path_spec; discard; version=0
+Set-Cookie3: JSESSIONID=EEA1A798C1399B0FF9F838614C6CA3F7; path="/"; domain="www.tipdm.org"; path_spec; discard; HttpOnly=None; version=0
+Set-Cookie3: _site_id_cookie=1; path="/"; domain="www.tipdm.org"; path_spec; discard; version=0
+Set-Cookie3: clientlanguage=zh_CN; path="/"; domain="www.tipdm.org"; path_spec; discard; version=0
