@@ -17,7 +17,7 @@ href = [i['href'] for i in data]
 # %% 写入json文件
 import pandas as pd
 
-with open('temp.json', 'w') as f:
+with open('爬虫/静态网站爬取/temp.json', 'w') as f:
     json.dump({'name': names, 'href': href}, f, ensure_ascii=False)
 # 查询当前工作路径
 print(os.getcwd())
