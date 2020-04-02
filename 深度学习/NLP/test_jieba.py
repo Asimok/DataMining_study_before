@@ -14,3 +14,8 @@ jieba.load_userdict('word_jieba.txt')
 res = jieba.lcut(str, cut_all=False, HMM=True)
 print(str)
 print(res)
+
+a = ''
+for i in res:
+    a = a + ' ' + i.replace('，', '').replace('。', '').replace('.', '')
+print(a)

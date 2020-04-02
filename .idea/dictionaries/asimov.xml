@@ -8,8 +8,12 @@
       <w>jieba</w>
       <w>lxml</w>
       <w>mnist</w>
+      <w>softmax</w>
+      <w>tempstr</w>
+      <w>testimages</w>
       <w>tfidf</w>
       <w>vectorizer</w>
+      <w>xlsx</w>
     </words>
   </dictionary>
 </component>

@@ -1,9 +1,3 @@
-import glob
-
-
-import matplotlib.pyplot as plt
-import numpy as np
-import imageio
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -13,7 +7,7 @@ mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 # 学习速率
 learning_rate = 0.001
 # 训练步长
-train_step = 1000
+train_step = 10000
 # 每次训练放入的样本数量
 batch_size = 100
 # 打印间隔
@@ -32,7 +26,7 @@ tf.reset_default_graph()
 
 # 网络输入 x_data
 # 占位符：模型输入
-x_data = tf.placeholder(tf.float32, [None, frame_size * sequence_num])
+x_data = tf.placeholder(tf.float32, [None, frame_size * sequence_num], name='input')
 
 """
 目标输出值
@@ -66,7 +60,7 @@ output, state = tf.nn.dynamic_rnn(rnn_cell, x, dtype=tf.float32)
 只需要最后一个输出
 y 整个网络的输出值
 """
-y = tf.nn.softmax(tf.matmul(output[:, -1, :], weight) + bias)
+y = tf.nn.softmax(tf.matmul(output[:, -1, :], weight) + bias, name='output')
 
 """
 交叉熵 cross_entropy
@@ -81,7 +75,8 @@ cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_
 train = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 # 准确率
 acc = tf.reduce_mean(tf.to_float(tf.equal(tf.argmax(y, 1), tf.arg_max(y_data, 1))))
-
+# 保存模型
+saver = tf.train.Saver()
 #  启动会话
 sess = tf.Session()
 # 执行变量初始化操作
@@ -105,12 +100,6 @@ while step < train_step:
 # 测试模型在测试集上的预测精度
 acc_te = sess.run(acc, feed_dict={x_data: mnist.test.images, y_data: mnist.test.labels})  # 模型测试精度
 print('模型在测试集上的预测精度：', acc_te)
-
+# 保存模型
+saver.save(sess, 'model/softmax_model')
 sess.close()
-
-
-# '还原某张图片'
-import matplotlib.pyplot as plt
-a = mnist.train.images[2]
-b = a.reshape([28, 28])*255
-plt.imshow(b)

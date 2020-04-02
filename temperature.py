@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 data_dir = './jena_climate_2009_2016.csv/jena_climate_2009_2016.csv'  # 数据存放位置
 
 f = open(data_dir)  # 打开文件
-data = f.read()  # 读取文件
+data_train = f.read()  # 读取文件
 f.close()  # 关闭
 
 lines = data.split('\n')  # 按行切分
