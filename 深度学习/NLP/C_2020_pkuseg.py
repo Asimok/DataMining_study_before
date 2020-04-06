@@ -9,9 +9,9 @@ from sklearn.naive_bayes import BernoulliNB
 训练集处理
 """
 with open('/home/asimov/PycharmProjects/DataMining/深度学习/NLP/data/stoplist.txt', 'r') as f:
-    stopWords = f.read()  # 获取停顿词
+    stop_words = f.read()  # 获取停顿词
 f.close()
-stopWords = ['  ', ' ', '\n','\t'] + stopWords.split()  # 改为列表 并且扩充一部分停顿词
+stop_words = ['  ', ' ', '\n','\t'] + stop_words.split()  # 改为列表 并且扩充一部分停顿词
 
 replace_str = ['，', '。', '.', '!', '：', '（', '）', '、', '‘', '`', '“', '！', '\\r\\n', '\'', ',', '\\xa0', '”', '？', '\'',
                '；', '?', '\\']
@@ -19,6 +19,7 @@ classification = ['城乡建设', '环境保护', '交通运输', '教育文体'
 data_train = pd.read_excel('./data/训练集.xlsx', sheet_name='Sheet1')
 text_tr = []
 y_tr = []
+y_te=[]
 # pku = pkuseg.pkuseg(model_name='./models')
 pku = pkuseg.pkuseg()
 for i in data_train['留言详情']:
@@ -29,7 +30,7 @@ for i in data_train['留言详情']:
         for m in replace_str:
             # print(m)
             j = j.replace(m, '')
-        if j not in stopWords:
+        if j not in stop_words:
             tempstr = tempstr + ' ' + j
     text_tr.append(tempstr)
 
@@ -54,10 +55,12 @@ for i in data_test['留言详情']:
         for m in replace_str:
             # print(m)
             j = j.replace(m, '')
-        if j not in stopWords:
+        if j not in stop_words:
             tempstr = tempstr + ' ' + j
     text_te.append(tempstr)
 
+for i in data_test['一级分类']:
+    y_te.append(classification.index(i))
 """
 训练集样本
 转成词向量
@@ -86,7 +89,8 @@ model = GaussianNB()
 model.fit(tfidf_tr, y_tr)
 # 模型预测
 ans = model.predict(tfidf_te)
-
+acr = model.score(tfidf_te,y_te)
+print("精度:",acr)
 print("真实数据      预测数据")
 for i, j in zip(data_test['一级分类'], ans):
     print(i, "   ", classification[int(j)])

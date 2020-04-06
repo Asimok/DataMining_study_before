@@ -9,6 +9,8 @@
       <w>jieba</w>
       <w>lxml</w>
       <w>mnist</w>
+      <w>newdic</w>
+      <w>qumin</w>
       <w>softmax</w>
       <w>tempstr</w>
       <w>testimages</w>
