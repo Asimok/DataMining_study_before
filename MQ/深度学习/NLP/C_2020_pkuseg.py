@@ -13,7 +13,7 @@ with open('/MQ/深度学习/NLP/data/stoplist.txt', 'r') as f:
 f.close()
 stop_words = ['  ', ' ', '\n','\t'] + stop_words.split()  # 改为列表 并且扩充一部分停顿词
 
-replace_str = ['，', '。', '.', '!', '：', '（', '）', '、', '‘', '`', '“', '！', '\\r\\n', '\'', ',', '\\xa0', '”', '？', '\'',
+replace_str = ['，', '。', '.', '!', '：', '（', '）', '、', '‘', '`', '“', '！', '\r\n', '\'', ',', '\xa0', '”', '？', '\'',
                '；', '?', '\\']
 classification = ['城乡建设', '环境保护', '交通运输', '教育文体', '劳动和社会保障', '商贸旅游', '卫生计生']
 data_train = pd.read_excel('./data/训练集.xlsx', sheet_name='Sheet1')
