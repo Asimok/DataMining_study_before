@@ -15,7 +15,9 @@
       <w>tempstr</w>
       <w>testimages</w>
       <w>tfidf</w>
+      <w>userdict</w>
       <w>vectorizer</w>
+      <w>weibo</w>
       <w>xlsx</w>
     </words>
   </dictionary>
