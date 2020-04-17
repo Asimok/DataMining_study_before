@@ -22,13 +22,14 @@ def get_train_valid_test_set(url, chunk_size_x):
 
     train_data_set = np.array(data_set)
     reframed_train_data_set = np.array(series_to_supervised(train_data_set, chunk_size_x, 1).values)
-    print('train_data_set\n', train_data_set.shape)
+    print('reframed_train_data_set\n',reframed_train_data_set.shape)
     # 数据集划分,选取前60%天的数据作为训练集,中间20%天作为验证集,其余的作为测试集
     train_days = int(len(reframed_train_data_set) * 0.6)
     valid_days = int(len(reframed_train_data_set) * 0.2)
 
+
     train = reframed_train_data_set[:train_days, :]
-    valid = reframed_train_data_set[train_days:train_days + valid_days, :]
+    valid = reframed_train_data_set[train_days:train_days  :]
     test = reframed_train_data_set[train_days + valid_days:, :]
 
     # test_data是用于计算correlation与spearman-correlation而存在
@@ -43,7 +44,16 @@ def get_train_valid_test_set(url, chunk_size_x):
     valid_x = valid_x.reshape((valid_x.shape[0], chunk_size_x, 1))
     test_x = test_x.reshape((test_x.shape[0], chunk_size_x, 1))
 
-    return train_x, train_y, valid_x, valid_y, test_x, test_y, test_data, reframed_train_data_set
+    print(test_x.shape)
+    print(test_x.__class__)
+    # TODO 寻找test
+    test_x1 =np.zeros((462, 3, 1))
+    with open('a1.txt', 'w+') as f:
+        for i in test_x1:
+            f.write(str(i) + '\n')
+
+
+    return train_x, train_y, valid_x, valid_y, test_x1, test_y, test_data, reframed_train_data_set
 
 
 """
@@ -117,8 +127,9 @@ def lstm_model(url, train_x, label_y, valid_x, valid_y, test_x, test_y, input_ep
     # prediction Generates output predictions for the input samples.
     train_predict = model.predict(train_x)
     valid_predict = model.predict(valid_x)
-    print('test_x\n', test_x)
+
     test_predict = model.predict(test_x)
+
 
     test_data_list = list(chain(*test_data))
     test_predict_list = list(chain(*test_predict))
@@ -128,13 +139,13 @@ def lstm_model(url, train_x, label_y, valid_x, valid_y, test_x, test_y, input_ep
 
     plt.plot(res.history['loss'], label='train')
     plt.show()
-    print('model.summary()', model.summary())
+    print('model.summary()',model.summary())
     plot_img(source_data_set, train_predict, valid_predict, test_predict)
     # print('test_predict_list',test_predict_list)
     correlation = get_correlation(test_data_list, test_predict_list)
     spearman_correlation = get_spearman_correlation(test_data_list, test_predict_list)
     mse_pre_src = get_mse_pre_src(test_data_list, test_predict_list)
-    return mse_pre_src, correlation, spearman_correlation, test_predict_list
+    return mse_pre_src, correlation, spearman_correlation,test_predict_list
 
 
 def get_mse_pre_src(test_data, predict_data):
@@ -166,21 +177,21 @@ def plot_img(source_data_set, train_predict, valid_predict, test_predict):
 # define your own chunk size and epoch times
 def main():
     chunk_size = 3
-    input_epochs = 3
+    input_epochs = 3000
     input_batch_size = 100
     url = r'./data/test.csv'
     train_x, label_y, valid_x, valid_y, test_x, test_y, test_data, reframed = \
         get_train_valid_test_set(url=url, chunk_size_x=chunk_size)
-    mse_pre_src, correlation, spearman_correlation, test_predict_list = lstm_model(url, train_x, label_y,
-                                                                                   valid_x, valid_y, test_x, test_y,
-                                                                                   input_epochs, input_batch_size,
-                                                                                   test_data, chunk_size_x=chunk_size)
+    mse_pre_src, correlation, spearman_correlation ,test_predict_list= lstm_model(url, train_x, label_y,
+                                                                valid_x, valid_y, test_x, test_y,
+                                                                input_epochs, input_batch_size,
+                                                                test_data, chunk_size_x=chunk_size)
     print(mse_pre_src)
     print(correlation)
     print(spearman_correlation)
     print(reframed)
     print(reframed.shape)
-    print('test_predict_list\n', test_predict_list)
+    print('test_predict_list\n',test_predict_list)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/京东商城网购评论情感分析/data/douban.csv" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/京东商城网购评论情感分析/data/stopword.txt" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/基于文本内容的垃圾短信识别/data/stopword.txt" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/深度学习/NLP/data/stopword.txt" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/爬虫实践(豆瓣)/data/douban.csv" charset="GB18030" />
+  </component>
+</project>

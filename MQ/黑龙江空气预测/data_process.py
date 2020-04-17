@@ -98,3 +98,4 @@ plt.plot([None for _ in train_predict] + [None for _ in valid_predict] + [x for 
 plt.legend(fontsize=16)
 plt.show()
 plt.savefig('./data/ans.png')
+scaler.inverse_transform(scaled_data)

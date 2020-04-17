@@ -18,6 +18,7 @@
       <w>userdict</w>
       <w>vectorizer</w>
       <w>weibo</w>
+      <w>wordcloud</w>
       <w>xlsx</w>
     </words>
   </dictionary>
