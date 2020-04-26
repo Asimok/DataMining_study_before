@@ -47,9 +47,9 @@ def get_temp_val(data_train, data_test, data_dev):
 # 比例 8
 for i in range(7):
     get_temp_data = data.loc[data['一级标签'] == classification[i]]
-    temp_data = get_temp_data.sample(frac=0.75)
+    temp_data = get_temp_data.sample(frac=0.35)
     temp_train = get_temp_data.drop(temp_data.index)
-    temp_test = temp_data.sample(frac=0.3)
+    temp_test = temp_data.sample(frac=0.2)
     temp_dev = temp_data.drop(temp_test.index)
     get_temp_val(temp_train, temp_test, temp_dev)
 
