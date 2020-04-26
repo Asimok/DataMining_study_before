@@ -44,12 +44,12 @@ def get_temp_val(data_train, data_test, data_dev):
         y_dev.append(classification.index(index))
 
 
-# 比例 6 2 2
+# 比例 8
 for i in range(7):
     get_temp_data = data.loc[data['一级标签'] == classification[i]]
-    temp_data = get_temp_data.sample(frac=0.4)
+    temp_data = get_temp_data.sample(frac=0.75)
     temp_train = get_temp_data.drop(temp_data.index)
-    temp_test = temp_data.sample(frac=0.5)
+    temp_test = temp_data.sample(frac=0.3)
     temp_dev = temp_data.drop(temp_test.index)
     get_temp_val(temp_train, temp_test, temp_dev)
 
@@ -93,9 +93,14 @@ with open(path + 'dev_' + name + '.txt', 'w') as f:
 
 lens = []
 max1 = 0
+min1 = 5
+nums = 0
 for i in range(train_end.__len__()):
     lens.append(len(train_end[i]))
     if len(train_end[i]) > max1:
         max1 = len(train_end[i])
         print(max1, '  ', i)
+    if len(train_end[i]) < min1:
+        nums += 1
+print('nums:', nums)
 shapes = pd.DataFrame(lens).describe()
