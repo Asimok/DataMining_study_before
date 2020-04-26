@@ -1,5 +1,3 @@
-import random
-
 import pandas as pd
 
 classification = ['城乡建设', '环境保护', '交通运输', '教育文体', '劳动和社会保障', '商贸旅游', '卫生计生']
@@ -44,63 +42,40 @@ def get_temp_val(data_train, data_test, data_dev):
         y_dev.append(classification.index(index))
 
 
-# 比例 8
+# 比例 6 2 2
 for i in range(7):
     get_temp_data = data.loc[data['一级标签'] == classification[i]]
-    temp_data = get_temp_data.sample(frac=0.75)
+    temp_data = get_temp_data.sample(frac=0.4)
     temp_train = get_temp_data.drop(temp_data.index)
-    temp_test = temp_data.sample(frac=0.3)
+    temp_test = temp_data.sample(frac=0.2)
     temp_dev = temp_data.drop(temp_test.index)
     get_temp_val(temp_train, temp_test, temp_dev)
 
-# 打乱顺序
-end_data_train = pd.DataFrame({'data': train, 'label': y_train})
-end_data_train = end_data_train.sample(frac=1).reset_index(drop=True)
-train_end = end_data_train['data']
-y_train_end = end_data_train['label']
 
-end_data_test = pd.DataFrame({'data': test, 'label': y_test})
-end_data_test = end_data_test.sample(frac=1).reset_index(drop=True)
-test_end = end_data_test['data']
-y_test_end = end_data_test['label']
-
-end_data_dev = pd.DataFrame({'data': dev, 'label': y_dev})
-end_data_dev = end_data_dev.sample(frac=1).reset_index(drop=True)
-dev_end = end_data_dev['data']
-y_dev_end = end_data_dev['label']
-
-path = '/home/asimov/PycharmProjects/Chinese-Text-Classification-Pytorch/THUCNews/data/'
-# path='/home/asimov/PycharmProjects/DataMining/C_data/processed/'
-name = "detail"
-with open(path + 'train_' + name + '.txt', 'w') as f:
-    for i in range(len(y_train_end)):
-        f.write(str(train_end[i]))
+with open('/home/asimov/PycharmProjects/DataMining/C_data/processed/train4.txt', 'w') as f:
+    for i in range(len(y_train)):
+        f.write(str(train[i]))
         f.write('\t')
-        f.write(str(y_train_end[i]))
+        f.write(str(y_train[i]))
         f.write('\n')
-with open(path + 'test_' + name + '.txt', 'w') as f:
-    for i in range(len(y_test_end)):
-        f.write(str(test_end[i]))
+with open('/home/asimov/PycharmProjects/DataMining/C_data/processed/test4.txt', 'w') as f:
+    for i in range(len(y_test)):
+        f.write(str(test[i]))
         f.write('\t')
-        f.write(str(y_test_end[i]))
+        f.write(str(y_test[i]))
         f.write('\n')
-with open(path + 'dev_' + name + '.txt', 'w') as f:
-    for i in range(len(y_dev_end)):
-        f.write(str(dev_end[i]))
+with open('/home/asimov/PycharmProjects/DataMining/C_data/processed/dev4.txt', 'w') as f:
+    for i in range(len(y_dev)):
+        f.write(str(dev[i]))
         f.write('\t')
-        f.write(str(y_dev_end[i]))
+        f.write(str(y_dev[i]))
         f.write('\n')
 
 lens = []
-max1 = 0
-min1 = 5
-nums = 0
-for i in range(train_end.__len__()):
-    lens.append(len(train_end[i]))
-    if len(train_end[i]) > max1:
-        max1 = len(train_end[i])
-        print(max1, '  ', i)
-    if len(train_end[i]) < min1:
-        nums += 1
-print('nums:', nums)
+max = 0
+for i in range(train.__len__()):
+    lens.append(len(train[i]))
+    if len(train[i]) > max:
+        max = len(train[i])
+        print(max, '  ', i)
 shapes = pd.DataFrame(lens).describe()

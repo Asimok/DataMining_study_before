@@ -26,3 +26,10 @@ opencv-python~=3.4.0.12
 scikit-learn~=0.22.2.post1
 future~=0.18.2
 tqdm~=4.45.0
+
+enum34~=1.1.10
+bert~=2.2.0
+opencv-python~=3.4.0.12
+scikit-learn~=0.22.2.post1
+future~=0.18.2
+tqdm~=4.45.0

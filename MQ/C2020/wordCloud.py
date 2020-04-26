@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot  as plt
 from wordcloud import WordCloud
 
 from MQ.C2020.data_process import data_process
 
-data_str_train, data_after_stop_train, labels_train = data_process(file='./data/训练集.xlsx')
+data_str_train, data_after_stop_train, labels_train = data_process(file='./data/训练集1.xls')
 # 统计词频
 dic = {}
 for i in data_after_stop_train:
@@ -17,6 +17,6 @@ mask = plt.imread('./data/duihuakuan.jpg')
 wc = WordCloud(font_path='/usr/share/fonts/opentype/noto/NotoSerifCJK-Medium.ttc', mask=mask, background_color='white')
 wc.fit_words(dic)
 plt.imshow(wc)
-plt.imsave('word.png',wc)
+# plt.imsave('word.png', wc)
 plt.axis('off')
 plt.show()
