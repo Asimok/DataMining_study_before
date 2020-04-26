@@ -32,7 +32,7 @@ for text in texts:
 
     # 模型预测
     predicted = load_model.predict(x_train)
-    y = np.argmax(predicted)
+    y = np.argmax(predicted[0])
     # print(y)
     # label = 'Y' if y else 'N'
     labels.append(y)
