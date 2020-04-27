@@ -1,3 +1,6 @@
+"""
+分成7类 提取关键词
+"""
 import jieba.analyse
 import jieba.posseg as psg
 import pandas as pd
@@ -21,18 +24,38 @@ ldhshbz_data.to_excel('/home/asimov/PycharmProjects/DataMining/question2/classif
 smly_data.to_excel('/home/asimov/PycharmProjects/DataMining/question2/classifications_seven/smly_data.xls')
 wsjs_data.to_excel('/home/asimov/PycharmProjects/DataMining/question2/classifications_seven/wsjs_data.xls')
 """
-l:习用语 nr:人名 nz:其他专名
+l:习用语 nr:人名 nz:其他专名 ns:地名
 """
 jieba.load_userdict('./data/new_places.txt')
-# str = cxjs_data['留言主题'][2]
-str = '反映M9县春华镇金鼎村水泥路、自来水到户的问题'
-print(str)
-keywords = " ".join(jieba.analyse.extract_tags(sentence=str, topK=10, withWeight=False, allowPOS=(['n', 'ns','l'])))
-print(keywords)
-keywords = jieba.analyse.extract_tags(sentence=str, topK=5, withWeight=True, allowPOS=(['n', 'v']))
-print(keywords)
+jieba.load_userdict('./data/changsha_ns.txt')
 
-print('分词及词性：')
-result = psg.cut(str)
-print(result)
-print([(x.word, x.flag) for x in result])
+
+# ----------------------------提取地名 人群--------------------------- #
+
+def generate_people_and_loc(temp_set):
+    PEOPLE_AND_LOC = []
+    for temp_theme in temp_set['留言主题']:
+        keywords = " ".join(
+            jieba.analyse.extract_tags(sentence=temp_theme, topK=10, withWeight=False,
+                                       allowPOS=(['n', 'ns', 'l', 'nr', 'nz'])))
+        PEOPLE_AND_LOC.append(keywords)
+    temp_id = temp_set['留言编号']
+    temp_user = temp_set['留言用户']
+    temp_time = temp_set['留言时间']
+    temp_disagree = temp_set['反对数']
+    temp_agree = temp_set['点赞数']
+    temp_label = list(temp_set['预测一级标签'])[0]
+    col = ['留言编号', '留言用户', '留言时间', '地点/人群', '反对数', '点赞数']
+    temp_save = pd.DataFrame(
+        {'留言编号': temp_id, '留言用户': temp_user, '留言时间': temp_time, '地点/人群': PEOPLE_AND_LOC, '反对数': temp_disagree,
+         '点赞数': temp_agree}, columns=col)
+    temp_save.to_excel('./classifications_seven_PEOPLE_AND_LOC/' + temp_label + '地点_人群.xls')
+
+
+generate_people_and_loc(cxjs_data)
+generate_people_and_loc(hjbh_data)
+generate_people_and_loc(jtys_data)
+generate_people_and_loc(jywt_data)
+generate_people_and_loc(ldhshbz_data)
+generate_people_and_loc(smly_data)
+generate_people_and_loc(wsjs_data)
